@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   allPosts: [],
+  loading: false,
 };
 
 export const postSlice = createSlice({
@@ -14,9 +15,15 @@ export const postSlice = createSlice({
       const listOfPosts = action.payload; // [{}, {}]
       state.allPosts = [...listOfPosts];
     },
+    startLoading: (state) => {
+      state.loading = true;
+    },
+    stopLoading: (state) => {
+      state.loading = false;
+    },
   },
 });
 
-export const { savePosts } = postSlice.actions;
+export const { savePosts, startLoading, stopLoading } = postSlice.actions;
 
 export default postSlice.reducer;

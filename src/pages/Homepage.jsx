@@ -1,35 +1,21 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { savePosts } from "../store/posts/slice";
-import { selectPosts } from "../store/posts/selectors";
-
-const API_URL = `https://codaisseur-coders-network.herokuapp.com`;
+import { selectPosts, selectLoading } from "../store/posts/selectors";
+import { fetchPosts } from "../store/posts/thunks";
 
 export default function Homepage() {
   const dispatch = useDispatch();
   const posts = useSelector(selectPosts);
-
-  async function fetchPosts() {
-    try {
-      const response = await axios.get(`${API_URL}/posts`);
-      const posts = response.data.rows;
-      console.log("posts", response.data);
-
-      dispatch(savePosts(posts)); // send data to store!
-    } catch (e) {
-      console.log(e.message);
-    }
-  }
+  const loading = useSelector(selectLoading);
 
   useEffect(() => {
-    fetchPosts();
+    dispatch(fetchPosts()); // we dispatch the thunk to trigger the fetching
   }, []);
 
   return (
     <div>
       <h2>Posts</h2>
-      {posts.length === 0 ? (
+      {loading ? (
         "Loading"
       ) : (
         <ul>
