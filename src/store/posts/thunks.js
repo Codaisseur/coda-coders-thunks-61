@@ -8,7 +8,7 @@ const API_URL = `https://codaisseur-coders-network.herokuapp.com`;
 
 export const fetchPosts = () => async (dispatch, getState) => {
   try {
-    // const state = getState();
+    const state = getState();
     // const token = state.user.token
     // const pizzaId = state.pizzas.details.id;
 
